@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <link rel="stylesheet" href="./glavniy.css">
+    <title>Главная</title>
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-logo-zone">
+                <a class="logo-link" href="glavniy.html">
+                    <img src="./img/uzum-logo.svg" alt="Uzum Market">
+                </a>
+                <select id="tipi" class="category-select">
+                    <option value="all">Каталог</option>
+                    <option value="furniture">Мебель</option>
+                    <option value="PC">ПК</option>
+                    <option value="audio">Наушники</option>
+                    <option value="TV">Телевизор</option>
+                    <option value="kitchen">Кухня</option>
+                </select>
+            </div>
+
+            <div class="header-search-zone">
+                <sl-input id="search-input" class="search-field" placeholder="Искать товары" clearable>
+                    <sl-icon class="search-field__icon" name="search" slot="suffix"></sl-icon>
+                </sl-input>
+            </div>
+
+            <div class="header-navigation">
+                <div class="user-auth-block">
+                    <img src="./img/Group 237729.svg" alt="User">
+                    <a href="./Login/index.html" class="auth-link">Войти</a>
+                </div>
+                <a href="./likes/likes.html" class="nav-item-link">
+                    Избранное <span id="fav-count" class="badge">0</span>
+                </a>
+                <a href="./basket/basket.html" class="nav-item-link">
+                    Корзина <span id="cart-count" class="badge badge--orange">0</span>
+                </a>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="swiper mySwiper main-banner-slider">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="https://static.uzum.uz/Landing_Fashion_v2/1main2383ru.jpg" alt="Промо 1"></div>
+                    <div class="swiper-slide"><img src="https://images.uzum.uz/d8evuk49g1ktqmlqvjmg/main_page_banner.jpg" alt="Промо 2"></div>
+                    <div class="swiper-slide"><img src="https://images.uzum.uz/d8abl23sv8vo2t0hfs3g/main_page_banner.jpg" alt="Промо 3"></div>
+                    <div class="swiper-slide"><img src="https://images.uzum.uz/d7u6h8i1146tv06u965g/main_page_banner.jpg" alt="Промо 4"></div>
+                    <div class="swiper-slide"><img src="https://images.uzum.uz/d8ab9rk9g1ktqmlpilqg/main_page_banner.jpg" alt="Промо 5"></div>
+                    <div class="swiper-slide"><img src="https://images.uzum.uz/d8f00ua1146tv074faig/main_page_banner.jpg" alt="Промо 6"></div>
+                    <div class="swiper-slide"><img src="https://images.uzum.uz/d8fbs8k9g1ktqmlr40gg/main_page_banner.jpg" alt="Промо 7"></div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <section class="goods-section">
+                <h2 class="section-title">Популярное</h2>
+                <div id="goods-container" class="products-grid"></div>
+                
+                <div class="pagination-container">
+                    <button id="pokazat" class="btn-load-more">Показать еще</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 class="footer-title">О нас</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Пункты выдачи</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-title">Пользователям</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Связаться с нами</a></li>
+                        <li><a href="#">Вопрос - Ответ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-title">Для предпринимателей</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Продавайте на Uzum</a></li>
+                        <li><a href="#">Вход для продавцов</a></li>
+                        <li><a href="#">Открыть пункт выдачи</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-title">Скачать приложение</h3>
+                    <div class="app-buttons">
+                        <a href="#" class="app-btn">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store">
+                        </a>
+                        <a href="#" class="app-btn">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
+                        </a>
+                    </div>
+                    <h3 class="footer-title soc-title">Uzum в соцсетях</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link">Facebook</a>
+                        <a href="#" class="social-link">Instagram</a>
+                        <a href="#" class="social-link">Telegram</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Акрамов Азим</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                prevEl: ".swiper-button-prev",
+                nextEl: ".swiper-button-next",
+            },
+        });
+    </script>
+    <script src="./header.js"></script>
+    <script src="./glavniy.js"></script>
+</body>
+</html>

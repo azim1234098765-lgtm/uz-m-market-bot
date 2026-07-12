@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="glavniy.css">
+    <link rel="stylesheet" href="item.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <title>Товар</title>
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-logo-zone">
+                <a class="logo-link" href="glavniy.html">
+                    <img src="img/uzum-logo.svg" alt="Uzum Market">
+                </a>
+                <select id="tipi" class="category-select">
+                    <option value="all">Каталог</option>
+                    <option value="furniture">Мебель</option>
+                    <option value="PC">ПК</option>
+                    <option value="audio">Наушники</option>
+                    <option value="TV">Телевизор</option>
+                    <option value="kitchen">Кухня</option>
+                </select>
+            </div>
+
+            <div class="header-search-zone">
+                <sl-input id="search-input" class="search-field" placeholder="Искать товары" clearable>
+                    <sl-icon class="search-field__icon" name="search" slot="suffix"></sl-icon>
+                </sl-input>
+            </div>
+
+            <div class="header-navigation">
+                <div class="user-auth-block">
+                    <img src="img/Group 237729.svg" alt="User">
+                    <a href="Login/index.html" class="auth-link">Войти</a>
+                </div>
+                <a href="likes/likes.html" class="nav-item-link">
+                    Избранное <span id="fav-count" class="badge">0</span>
+                </a>
+                <a href="basket/basket.html" class="nav-item-link">
+                    Корзина <span id="cart-count" class="badge badge--orange">0</span>
+                </a>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div id="product-page"></div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+    <script src="./header.js"></script>
+    <script src="./item.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="auth">
+      <div class="auth__tabs">
+        <button class="auth__tab auth__tab--active" data-tab="login">
+          Вход
+        </button>
+        <button class="auth__tab" data-tab="register">Регистрация</button>
+      </div>
+
+      <form class="auth__form auth__form--active" id="loginForm">
+        <h2>Вход</h2>
+
+        <label>
+          Email
+          <input  id="email" type="email" placeholder="example@mail.com" required />
+        </label>
+
+        <label>
+          Пароль
+          <input  id="password" type="password" placeholder="••••••••" required />
+        </label>
+
+        <button type="submit" class="btn">Войти</button>
+      </form>
+
+
+      <form class="auth__form" id="registerForm">
+         <h2>Регистрация</h2>
+
+  <label>
+    Имя
+    <input id="regName" type="text" placeholder="Ваше имя" required />
+  </label>
+
+  <label>
+    Email
+    <input id="regEmail" type="email" placeholder="example@mail.com" required />
+  </label>
+
+  <label>
+    Пароль
+    <input id="regPassword" type="password" placeholder="••••••••" required />
+  </label>
+
+  
+        <button type="submit" class="btn">Создать аккаунт</button>
+      </form>
+    </div>
+
+    <script src="../header.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
