@@ -202,3 +202,66 @@ body {
     color: #1f2026;
     margin-bottom: 10px;
 }
+/* ===== АДАПТИВ ДЛЯ КОРЗИНЫ ===== */
+@media (max-width: 768px) {
+    .basket-layout {
+        flex-direction: column !important;
+    }
+    
+    .basket-summary {
+        width: 100% !important;
+        position: static !important;
+        margin-top: 16px;
+    }
+    
+    .cart-item {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        padding: 16px !important;
+    }
+    
+    .item-image {
+        width: 100px !important;
+        height: 100px !important;
+    }
+    
+    .item-title {
+        padding-right: 0 !important;
+        font-size: 14px !important;
+    }
+    
+    .item-controls-row {
+        justify-content: center !important;
+    }
+    
+    .remove-btn {
+        position: static !important;
+        margin-top: 12px !important;
+    }
+    
+    .basket-title {
+        font-size: 20px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-item {
+        padding: 12px !important;
+    }
+    
+    .item-image {
+        width: 80px !important;
+        height: 80px !important;
+    }
+    
+    .qty-btn {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 16px !important;
+    }
+    
+    .item-total-price {
+        font-size: 16px !important;
+    }
+}
