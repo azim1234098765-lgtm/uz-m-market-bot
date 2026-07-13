@@ -140,6 +140,305 @@
             },
         });
     </script>
+    <!-- ===== ИИ-ПОМОЩНИК ===== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let allProducts = [];
+    
+    fetch('./db.json')
+        .then(res => res.json())
+        .then(data => {
+            allProducts = data.goods;
+            window.allProducts = allProducts;
+        })
+        .catch(err => console.error('Ошибка:', err));
+
+    const chatBtn = document.createElement('div');
+    chatBtn.id = 'aiChatBtn';
+    chatBtn.innerHTML = '💬';
+    chatBtn.style.cssText = `
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 60px;
+        height: 60px;
+        background: #7000ff;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        cursor: pointer;
+        z-index: 999;
+        box-shadow: 0 4px 16px rgba(112,0,255,0.4);
+        transition: transform 0.3s, box-shadow 0.3s;
+    `;
+    chatBtn.onmouseover = () => {
+        chatBtn.style.transform = 'scale(1.1)';
+        chatBtn.style.boxShadow = '0 6px 24px rgba(112,0,255,0.6)';
+    };
+    chatBtn.onmouseout = () => {
+        chatBtn.style.transform = 'scale(1)';
+        chatBtn.style.boxShadow = '0 4px 16px rgba(112,0,255,0.4)';
+    };
+    document.body.appendChild(chatBtn);
+
+    const chatBox = document.createElement('div');
+    chatBox.id = 'aiChatBox';
+    chatBox.style.cssText = `
+        position: fixed;
+        bottom: 100px;
+        right: 24px;
+        width: 380px;
+        height: 500px;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+        display: none;
+        flex-direction: column;
+        z-index: 1000;
+        overflow: hidden;
+        border: 1px solid #e8ecf3;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    `;
+
+    const header = document.createElement('div');
+    header.style.cssText = `
+        background: #7000ff;
+        color: white;
+        padding: 16px 20px;
+        font-weight: 600;
+        font-size: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+    `;
+    header.innerHTML = `
+        <span>🤖 ИИ-помощник</span>
+        <span id="closeChatBtn" style="cursor:pointer;font-size:20px;">✕</span>
+    `;
+    chatBox.appendChild(header);
+
+    const messagesArea = document.createElement('div');
+    messagesArea.id = 'chatMessages';
+    messagesArea.style.cssText = `
+        flex: 1;
+        padding: 16px;
+        overflow-y: auto;
+        background: #f7f8fc;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    `;
+    
+    const welcomeMsg = document.createElement('div');
+    welcomeMsg.style.cssText = `
+        background: white;
+        padding: 14px 18px;
+        border-radius: 14px 14px 14px 4px;
+        font-size: 14px;
+        color: #1f2026;
+        line-height: 1.5;
+        max-width: 85%;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        align-self: flex-start;
+    `;
+    welcomeMsg.innerHTML = `
+        👋 Привет! Я ИИ-помощник.<br>
+        <span style="color:#8b8e99;font-size:13px;">
+            Напиши, что ищешь, и я найду товары!
+        </span>
+    `;
+    messagesArea.appendChild(welcomeMsg);
+    chatBox.appendChild(messagesArea);
+
+    const inputArea = document.createElement('div');
+    inputArea.style.cssText = `
+        display: flex;
+        padding: 12px 16px;
+        border-top: 1px solid #e8ecf3;
+        background: white;
+        gap: 10px;
+        flex-shrink: 0;
+        align-items: center;
+    `;
+
+    const inputField = document.createElement('input');
+    inputField.id = 'chatInput';
+    inputField.type = 'text';
+    inputField.placeholder = 'Напиши вопрос...';
+    inputField.style.cssText = `
+        flex: 1;
+        padding: 10px 14px;
+        border: 1px solid #e2e5eb;
+        border-radius: 12px;
+        outline: none;
+        font-size: 14px;
+        background: #f7f8fc;
+        transition: border-color 0.2s;
+    `;
+    inputField.onfocus = () => {
+        inputField.style.borderColor = '#7000ff';
+        inputField.style.background = 'white';
+    };
+    inputField.onblur = () => {
+        inputField.style.borderColor = '#e2e5eb';
+        inputField.style.background = '#f7f8fc';
+    };
+
+    const sendBtn = document.createElement('button');
+    sendBtn.textContent = '➤';
+    sendBtn.style.cssText = `
+        background: #7000ff;
+        color: white;
+        border: none;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        font-size: 20px;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    `;
+    sendBtn.onmouseover = () => {
+        sendBtn.style.background = '#5b00d6';
+        sendBtn.style.transform = 'scale(1.05)';
+    };
+    sendBtn.onmouseout = () => {
+        sendBtn.style.background = '#7000ff';
+        sendBtn.style.transform = 'scale(1)';
+    };
+
+    inputArea.appendChild(inputField);
+    inputArea.appendChild(sendBtn);
+    chatBox.appendChild(inputArea);
+    document.body.appendChild(chatBox);
+
+    chatBtn.onclick = () => {
+        const isOpen = chatBox.style.display === 'flex';
+        chatBox.style.display = isOpen ? 'none' : 'flex';
+        if (!isOpen) inputField.focus();
+    };
+
+    document.getElementById('closeChatBtn').onclick = () => {
+        chatBox.style.display = 'none';
+    };
+
+    function findProducts(query) {
+        if (!allProducts || allProducts.length === 0) return [];
+        const q = query.toLowerCase().trim();
+        return allProducts.filter(item => 
+            item.title.toLowerCase().includes(q) ||
+            (item.description && item.description.toLowerCase().includes(q))
+        );
+    }
+
+    function addMessage(text, isUser = true) {
+        const msgDiv = document.createElement('div');
+        msgDiv.style.cssText = `
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 14px;
+            line-height: 1.5;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            animation: fadeInMsg 0.3s ease;
+        `;
+        
+        if (isUser) {
+            msgDiv.style.cssText += `
+                align-self: flex-end;
+                background: #7000ff;
+                color: white;
+                border-radius: 14px 14px 4px 14px;
+            `;
+            msgDiv.textContent = text;
+        } else {
+            msgDiv.style.cssText += `
+                align-self: flex-start;
+                background: white;
+                color: #1f2026;
+                border-radius: 14px 14px 14px 4px;
+                box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            `;
+            msgDiv.innerHTML = text;
+        }
+        
+        messagesArea.appendChild(msgDiv);
+        messagesArea.scrollTop = messagesArea.scrollHeight;
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeInMsg {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    `;
+    document.head.appendChild(style);
+
+    function sendMessage() {
+        const text = inputField.value.trim();
+        if (!text) return;
+        
+        addMessage(text, true);
+        inputField.value = '';
+        inputField.focus();
+        
+        const typingMsg = document.createElement('div');
+        typingMsg.id = 'typingIndicator';
+        typingMsg.style.cssText = `
+            align-self: flex-start;
+            background: white;
+            padding: 12px 18px;
+            border-radius: 14px 14px 14px 4px;
+            font-size: 13px;
+            color: #8b8e99;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        `;
+        typingMsg.textContent = '🤔 Думаю...';
+        messagesArea.appendChild(typingMsg);
+        messagesArea.scrollTop = messagesArea.scrollHeight;
+        
+        setTimeout(() => {
+            const found = findProducts(text);
+            const typingEl = document.getElementById('typingIndicator');
+            if (typingEl) typingEl.remove();
+            
+            let reply = '';
+            if (found.length === 0) {
+                reply = '😕 Ничего не найдено.\n\nПопробуйте: кресло, телевизор, наушники...';
+            } else {
+                reply = '🔍 Нашел товары:\n\n';
+                found.slice(0, 5).forEach((item) => {
+                    const price = item.isBlackFriday && item.salePercentage > 0 
+                        ? Math.floor(item.price * (100 - item.salePercentage) / 100)
+                        : item.price;
+                    reply += `📦 <b>${item.title}</b>\n💰 ${price.toLocaleString()} сум\n\n`;
+                });
+                if (found.length > 5) {
+                    reply += `... и еще ${found.length - 5} товаров`;
+                }
+            }
+            
+            addMessage(reply, false);
+        }, 700);
+    }
+
+    sendBtn.onclick = sendMessage;
+    inputField.onkeypress = (e) => {
+        if (e.key === 'Enter') sendMessage();
+    };
+
+    console.log('🤖 ИИ-помощник загружен!');
+});
+</script>
     <script src="./header.js"></script>
     <script src="./glavniy.js"></script>
 </body>
